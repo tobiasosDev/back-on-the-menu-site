@@ -1,0 +1,244 @@
+/* Back on the Menu: the app's kitchen palette (TummyTrials/Design/Theme.swift).
+   Fig ink on mint milk; basil, turmeric, paprika and beet only ever mark how a portion went. */
+
+@font-face {
+  font-family: "Nunito";
+  src: url("fonts/nunito.woff2") format("woff2");
+  font-weight: 200 1000;
+  font-display: swap;
+}
+
+:root {
+  --paper: #EFF4EF;
+  --card: #FFFFFF;
+  --ink: #34203A;
+  --muted: #6E6371;
+  --line: #DCE3DC;
+  --basil: #3E8E5A;
+  --turmeric: #D99A1E;
+  --paprika: #D9652F;
+  --beet: #C2365F;
+  --untested: #CFC9C2;
+
+  /* New York, the app's headline face, wherever Apple ships it. */
+  --serif: ui-serif, "New York", "Iowan Old Style", Charter, Georgia, serif;
+  --sans: "Nunito", ui-rounded, system-ui, sans-serif;
+  --measure: 36rem;
+  --radius: 22px;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #1C1620;
+    --card: #2A2230;
+    --ink: #F3ECF2;
+    --muted: #B5A9B5;
+    --line: #3A3040;
+    --basil: #5DB57B;
+    --turmeric: #E8B44A;
+    --paprika: #EB8250;
+    --beet: #E05A82;
+    --untested: #4A4150;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 1.125rem/1.6 var(--sans);
+  font-optical-sizing: auto;
+}
+
+a { color: inherit; text-decoration-thickness: 1.5px; text-underline-offset: .18em; }
+a:hover { text-decoration-thickness: 2.5px; }
+:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; border-radius: 6px; }
+
+.skip { position: absolute; left: -999px; }
+.skip:focus { left: 1rem; top: 1rem; background: var(--card); padding: .5rem .9rem; z-index: 2; }
+
+.wrap { width: min(70rem, 100% - 2.5rem); margin-inline: auto; }
+
+/* Header */
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 1.6rem;
+}
+.top .lockup { display: block; width: clamp(13rem, 30vw, 16.5rem); }
+.top .lockup img { display: block; width: 100%; height: auto; }
+.top nav { font-weight: 700; font-size: 1rem; }
+
+h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.12; margin: 0; }
+h1 { font-size: clamp(2.6rem, 6.2vw, 4.4rem); letter-spacing: -.022em; text-wrap: balance; }
+h2 { font-size: clamp(1.8rem, 3.6vw, 2.6rem); letter-spacing: -.015em; text-wrap: balance; }
+h3 { font-size: 1.35rem; letter-spacing: -.005em; }
+p { margin: 0; }
+
+.lead { font-size: clamp(1.2rem, 2.1vw, 1.38rem); line-height: 1.5; max-width: 32rem; }
+.muted { color: var(--muted); }
+
+/* Hero: the claim on the left, the menu on the right */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 27rem);
+  gap: clamp(2.5rem, 6vw, 5.5rem);
+  align-items: center;
+  padding-block: clamp(2rem, 7vw, 5.5rem) clamp(3.5rem, 8vw, 6.5rem);
+}
+.hero-text { display: grid; gap: 1.5rem; }
+/* Not a button until there is a store page to open. */
+.soon { display: grid; gap: .25rem; margin-top: .4rem; padding-left: 1rem; border-left: 3px solid var(--ink); }
+.soon b { font-weight: 800; font-size: 1.05rem; }
+.soon span { font-size: .98rem; color: var(--muted); }
+
+/* The menu: one food per line, dotted leaders, three growing portion dots, the result */
+.menu {
+  margin: 0;
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 2rem clamp(1.25rem, 3vw, 2rem) 1.6rem;
+  box-shadow: 0 1px 0 var(--line), 0 30px 60px -38px rgb(52 32 58 / .45);
+}
+.menu-head { text-align: center; margin-bottom: 1.4rem; }
+.menu-head svg { width: 2.1rem; height: 2.1rem; fill: currentColor; display: block; margin: 0 auto .6rem; }
+.menu-head h2 { font-size: 1.7rem; }
+.menu-head p { color: var(--muted); font-size: .98rem; margin-top: .2rem; }
+
+.menu ol { list-style: none; margin: 0; padding: 0; display: grid; gap: .95rem; }
+.menu li {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas: "food lead dots" "result result result";
+  column-gap: .6rem;
+  row-gap: .1rem;
+}
+.menu .food { grid-area: food; font-weight: 700; font-size: 1.06rem; line-height: 1.35; }
+/* Leader dots on the food's baseline, the way a menu runs a dish to its price */
+.menu .lead-dots { grid-area: lead; align-self: end; margin-bottom: .32em; border-bottom: 2px dotted var(--untested); }
+.menu .dots { grid-area: dots; align-self: end; }
+.menu .result { grid-area: result; font-size: .93rem; color: var(--muted); line-height: 1.35; }
+.menu .result b { color: var(--ink); font-weight: 700; }
+.menu-foot { margin-top: 1.4rem; padding-top: 1rem; border-top: 2px dotted var(--line); font-size: .92rem; color: var(--muted); text-align: center; }
+
+.dots { display: inline-flex; align-items: flex-end; gap: .38rem; }
+.dot { display: block; border-radius: 50%; box-shadow: inset 0 0 0 2px var(--untested); }
+.dot:nth-child(1) { width: .66rem; height: .66rem; }
+.dot:nth-child(2) { width: .94rem; height: .94rem; }
+.dot:nth-child(3) { width: 1.22rem; height: 1.22rem; }
+.dot.none { background: var(--basil); box-shadow: none; }
+.dot.mild { background: var(--turmeric); box-shadow: none; }
+.dot.moderate { background: var(--paprika); box-shadow: none; }
+.dot.severe { background: var(--beet); box-shadow: none; }
+
+/* The one moment of motion: each portion is eaten and rated, row after row. */
+@media (prefers-reduced-motion: no-preference) {
+  .menu .dot[class*=" "] { animation: serve .42s cubic-bezier(.2, .9, .3, 1.35) both; animation-delay: calc(var(--i, 0) * 95ms + 350ms); }
+  .menu .result { animation: appear .5s ease-out both; animation-delay: calc(var(--r, 0) * 95ms + 650ms); }
+}
+@keyframes serve { from { transform: scale(0); opacity: 0; } }
+@keyframes appear { from { opacity: 0; } }
+
+/* Sections */
+.section { padding-block: clamp(3.5rem, 8vw, 6rem); border-top: 2px solid var(--line); }
+.section .intro { max-width: var(--measure); display: grid; gap: 1rem; margin-bottom: clamp(2rem, 5vw, 3.2rem); }
+
+/* One test, day by day */
+.days {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, 1.25fr);
+  gap: 0;
+  counter-reset: day;
+}
+.days li {
+  padding: 0 1.4rem 0 0;
+  display: grid;
+  grid-template-rows: 5.2rem auto auto auto;
+  align-content: start;
+  gap: .35rem;
+}
+.days .plate { display: flex; align-items: flex-end; height: 5.2rem; padding-bottom: .9rem; border-bottom: 2px solid var(--ink); margin-right: -1.4rem; }
+.days li:last-child .plate { border-bottom-style: dashed; border-bottom-color: var(--muted); }
+.days .plate span { display: block; border-radius: 50%; background: var(--ink); }
+.days li:nth-child(1) .plate span { width: 1.5rem; height: 1.5rem; }
+.days li:nth-child(2) .plate span { width: 2.6rem; height: 2.6rem; }
+.days li:nth-child(3) .plate span { width: 3.7rem; height: 3.7rem; }
+.days .rest { display: flex; gap: .5rem; }
+.days .rest span { width: 1.6rem; height: 1.6rem; background: none; border: 2px dashed var(--muted); border-radius: 50%; }
+.days .when { font-weight: 800; font-size: .95rem; margin-top: .8rem; }
+.days .amount { font-family: var(--serif); font-size: 1.7rem; font-weight: 600; line-height: 1.15; }
+.days .what { color: var(--muted); font-size: 1rem; line-height: 1.5; max-width: 15rem; }
+.after { margin-top: 2.6rem; max-width: var(--measure); display: grid; gap: .8rem; }
+
+/* What's inside: a plain two-column list */
+.inside { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.2rem clamp(2rem, 6vw, 5rem); margin: 0; }
+.inside div { display: grid; gap: .4rem; max-width: 30rem; }
+.inside dt { font-family: var(--serif); font-size: 1.35rem; font-weight: 600; line-height: 1.2; }
+.inside dd { margin: 0; color: var(--muted); }
+.inside dd b { color: var(--ink); font-weight: 700; }
+
+.shots {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 3vw, 2.2rem);
+  margin-top: clamp(3rem, 6vw, 4.5rem);
+}
+.shots figure { margin: 0; display: grid; gap: .8rem; }
+.shots img { width: 100%; height: auto; border-radius: 2rem; display: block; box-shadow: 0 0 0 1px var(--line); background: var(--card); }
+.shots figcaption { font-size: .98rem; color: var(--muted); }
+
+/* Price */
+.price { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.5rem, 5vw, 4rem); max-width: 56rem; }
+.price > div { display: grid; gap: .6rem; align-content: start; }
+.price .amount { font-family: var(--serif); font-size: 1.9rem; font-weight: 600; line-height: 1.15; }
+
+/* Safety */
+.safety { max-width: var(--measure); display: grid; gap: 1rem; }
+
+/* Footer */
+.foot {
+  border-top: 2px solid var(--line);
+  padding-block: 2.2rem 3rem;
+  font-size: .95rem;
+  color: var(--muted);
+  display: grid;
+  gap: .8rem;
+}
+.foot nav { display: flex; flex-wrap: wrap; gap: .4rem 1.4rem; font-weight: 700; color: var(--ink); }
+
+/* Text pages: privacy, terms, support */
+.page { max-width: 42rem; padding-block: clamp(1.5rem, 5vw, 3.5rem) 3rem; }
+.page h1 { font-size: clamp(2.3rem, 5vw, 3.2rem); margin-bottom: .6rem; }
+.page .lead { margin-block: 1.4rem 1rem; max-width: none; }
+.page h2 { font-size: 1.6rem; margin-top: 2.6rem; margin-bottom: .6rem; }
+.page h3 { font-size: 1.2rem; margin-top: 1.8rem; margin-bottom: .4rem; }
+.page p + p { margin-top: .8rem; }
+.page ul { padding-left: 1.2rem; margin: .6rem 0 0; }
+.page li + li { margin-top: .4rem; }
+
+@media (max-width: 860px) {
+  .hero { grid-template-columns: 1fr; }
+  .menu { max-width: 30rem; }
+  .days { grid-template-columns: 1fr 1fr; row-gap: 2.4rem; }
+  .days li:nth-child(2) .plate { margin-right: 0; }
+  .inside, .price { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 520px) {
+  body { font-size: 1.06rem; }
+  .days { grid-template-columns: 1fr; }
+  .days li { grid-template-rows: auto auto auto auto; padding-right: 0; }
+  .days .plate { height: auto; min-height: 4.4rem; margin-right: 0; }
+  .shots { grid-template-columns: repeat(3, 70%); overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: .5rem; }
+  .shots figure { scroll-snap-align: start; }
+}
